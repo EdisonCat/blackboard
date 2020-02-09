@@ -1,22 +1,18 @@
 package com.edison.blackboard.dao;
 
 import com.edison.blackboard.model.Person;
-import java.util.List;
 import java.util.UUID;
 
 public interface PersonDao {
-    boolean insertPerson(UUID id, Person person);
-
-    List<Person> selectAllPeople();
+    boolean insertPerson(Person person);
 
     default boolean addPerson(Person person) {
         UUID id = UUID.randomUUID();
-        return insertPerson(id, person);
+        return insertPerson(person);
     }
 
     boolean deletePersonById(UUID id);
 
-    boolean updatePersonById(UUID id);
+    boolean updatePersonById(UUID id, Person person);
 
-    Person selectPersonById(UUID id);
 }
