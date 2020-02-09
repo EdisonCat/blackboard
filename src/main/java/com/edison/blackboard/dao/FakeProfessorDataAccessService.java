@@ -3,6 +3,7 @@ package com.edison.blackboard.dao;
 import com.edison.blackboard.model.Person;
 import com.edison.blackboard.model.Professor;
 import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -12,8 +13,8 @@ import java.util.UUID;
 public class FakeProfessorDataAccessService implements PersonDao {
     private static List<Professor> professorList = new ArrayList<>();
     @Override
-    public boolean insertPerson(Person person) {
-        professorList.add(new Professor(person.getName()));
+    public boolean insertPerson(UUID id, Person person) {
+        professorList.add(new Professor(id, person.getName()));
         return true;
     }
 

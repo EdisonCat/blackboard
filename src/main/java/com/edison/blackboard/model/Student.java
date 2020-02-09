@@ -9,9 +9,9 @@ public class Student implements Person {
     private String name;
     private Set<Course> courseList;
 
-    public Student(String name) {
+    public Student(UUID id, String name) {
         this.name = name;
-        this.id = UUID.randomUUID();
+        this.id = id;
         this.courseList = new HashSet<>();
     }
 
@@ -30,11 +30,20 @@ public class Student implements Person {
         this.name = name;
     }
 
+    @Override
     public void addCourse(Course course) {
         this.courseList.add(course);
     }
 
+    @Override
     public void removeCourse(Course course) {
         this.courseList.remove(course);
     }
+
+    @Override
+    public boolean isRegistered(Course course) {
+        return this.courseList.contains(course);
+    }
+
+
 }
