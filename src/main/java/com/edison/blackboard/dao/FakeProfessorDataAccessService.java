@@ -32,7 +32,15 @@ public class FakeProfessorDataAccessService implements PersonDao {
 
     @Override
     public boolean updatePersonById(UUID id, Person person) {
-        return false;
+        Professor newProfessor = new Professor(id, person.getName());
+        return selectPersonById(id).map(person1 -> {
+            int index = professorList.indexOf(person1);
+            if(index >= 0) {
+                professorList.set(index, newProfessor);
+                return true;
+            }
+            return false;
+        }).orElse(false);
     }
 
     public Optional<Professor> selectPersonById(UUID id) {
