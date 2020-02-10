@@ -15,7 +15,7 @@ public class Person {
         this.courseSet = new HashSet<>();
         this.id = id;
         this.name = name;
-        this.program = program;
+        this.program = new Program(program.getId(), program);
     }
     public String getName() {
         return this.name;
@@ -43,6 +43,6 @@ public class Person {
     }
 
     public void setProgram(Program program) {
-        this.program = new Program(program);
+        this.program = program;
     }
 }

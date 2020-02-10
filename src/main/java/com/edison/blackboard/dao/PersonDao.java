@@ -1,9 +1,10 @@
 package com.edison.blackboard.dao;
 
 import com.edison.blackboard.model.Person;
-import com.edison.blackboard.model.Professor;
 import com.edison.blackboard.model.Program;
 import com.edison.blackboard.model.Student;
+import com.edison.blackboard.service.ProgramService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -11,12 +12,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.edison.blackboard.dao.ProgramDao.getProgramByIndex;
+
 @Repository("PersonDao")
 public class PersonDao {
     private static List<Person> personList = new ArrayList<>();
     static {
-        personList.add(new Student(UUID.randomUUID(),"Larry", new Program("Information Systems")));
-        personList.add(new Student(UUID.randomUUID(),"Edison", new Program("Information Systems")));
+        personList.add(new Student(UUID.randomUUID(),"Larry", getProgramByIndex(2)));
+        personList.add(new Student(UUID.randomUUID(),"Edison",getProgramByIndex(0)));
     }
 
     public boolean addPerson(Person person) {
@@ -24,7 +27,7 @@ public class PersonDao {
         return insertPerson(id, person);
     }
 
-    public boolean insertPerson(UUID id, Person person) {
+    private boolean insertPerson(UUID id, Person person) {
         personList.add(new Person(id, person.getName(), person.getProgram()));
         return true;
     }

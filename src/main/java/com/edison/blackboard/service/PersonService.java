@@ -2,6 +2,7 @@ package com.edison.blackboard.service;
 
 import com.edison.blackboard.dao.PersonDao;
 import com.edison.blackboard.model.Person;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 public class PersonService {
     private final PersonDao personDao;
 
+    @Autowired
     public PersonService(@Qualifier("PersonDao") PersonDao personDao) {
         this.personDao = personDao;
     }
