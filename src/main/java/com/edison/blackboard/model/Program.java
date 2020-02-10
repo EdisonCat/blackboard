@@ -16,6 +16,16 @@ public class Program {
         this.professorSet = new HashSet<>();
     }
 
+    public Program(Program program) {
+        this.name = program.name;
+        if(program.courseSet != null)
+            this.courseSet = program.getCourseList();
+        if(program.studentSet != null)
+         this.studentSet = program.studentSet;
+        if(program.professorSet != null)
+            this.professorSet = program.professorSet;
+    }
+
     public Program() {
         this.courseSet = new HashSet<>();
         this.studentSet = new HashSet<>();

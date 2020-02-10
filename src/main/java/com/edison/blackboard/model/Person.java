@@ -1,5 +1,7 @@
 package com.edison.blackboard.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -9,10 +11,11 @@ public class Person {
     private UUID id;
     private Set<Course> courseSet;
     private Program program;
-    public Person(UUID id, String name) {
+    public Person(@JsonProperty("id") UUID id, @JsonProperty("name") String name, @JsonProperty("program") Program program) {
         this.courseSet = new HashSet<>();
         this.id = id;
         this.name = name;
+        this.program = program;
     }
     public String getName() {
         return this.name;
@@ -32,12 +35,14 @@ public class Person {
     public boolean isRegistered(Course course) {
         return this.courseSet.contains(course);
     }
+    public void setCourseSet(Set<Course> newCourseSet) { this.courseSet = newCourseSet; }
+    public Set<Course> getCourseSet() { return this.courseSet; }
 
     public Program getProgram() {
         return program;
     }
 
     public void setProgram(Program program) {
-        this.program = program;
+        this.program = new Program(program);
     }
 }

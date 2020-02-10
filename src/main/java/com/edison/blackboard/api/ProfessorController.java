@@ -37,7 +37,7 @@ public class ProfessorController {
 
     @PutMapping(path = "{id}")
     public boolean updatePersonById(@PathVariable("id") UUID id, @Valid @NotNull @RequestBody Person person) {
-        return personService.updatePersonById(id, new Person(id, person.getName()));
+        return personService.updatePersonById(id, new Person(id, person.getName(), person.getProgram()));
     }
 
     @DeleteMapping(path = "{id}")
