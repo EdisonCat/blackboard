@@ -1,10 +1,7 @@
 package com.edison.blackboard.dao;
 
 import com.edison.blackboard.model.Person;
-import com.edison.blackboard.model.Program;
 import com.edison.blackboard.model.Student;
-import com.edison.blackboard.service.ProgramService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

@@ -26,7 +26,7 @@ public class ProfessorController {
     }
 
     @GetMapping
-    public List<Person> getPerson() {
+    public List<Person> getAllPeople() {
         return personService.getAllPeople();
     }
 
