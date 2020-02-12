@@ -23,8 +23,12 @@ public class PersonService {
         return personDao.addPerson(person);
     }
 
-    public List<Person> getAllPeople() {
-        return personDao.selectAllPeople();
+    public List<Person> getAllStudents() {
+        return personDao.selectAllStudents();
+    }
+
+    public List<Person> getAllProfessors() {
+        return personDao.selectAllProfessors();
     }
 
     public Optional<Person> getPersonById(UUID id) {
