@@ -16,7 +16,7 @@ ProgramService.java is used to call ProgramDao.java when APIs in ProgramControll
 
 ---
 ### DAO(Data Access Operation):
-The layer that is close to datasource  
+The layer that is close to datasource.  
 #### PersonDao.java
 PersonDao.java is used to access person(student/professor) datasource and operate, this class can be called by PersonService.class.
 
