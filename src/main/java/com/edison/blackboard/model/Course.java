@@ -11,15 +11,23 @@ public class Course {
     private Student ta;
     private Professor professor;
 
-    public Course() {
-        this.id = UUID.randomUUID();
+    public Course(UUID id) {
+        this.id = id;
         this.studentSet = new HashSet<>();
     }
 
-    public Course(String name) {
+    public Course(UUID id, String name) {
+        this.id = id;
         setName(name);
-        this.id = UUID.randomUUID();
         this.studentSet = new HashSet<>();
+    }
+
+    public Course(UUID id, Course course) {
+        this.id = id;
+        this.professor = course.getProfessor();
+        this.ta = course.getTa();
+        this.studentSet = course.getStudentSet();
+        this.name = course.getName();
     }
 
     public String getName() {
