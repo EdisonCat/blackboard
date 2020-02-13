@@ -18,6 +18,13 @@ ProgramService.java is used to call ProgramDao.java when APIs in ProgramControll
 CourseService.java is used to call CourseDao.java when APIs in CourseController.java are called.
 
 ---
+
+### Config
+Configuration for database.(DynamoDB in this project)
+#### DynamoDbConfig.java
+DynamoDbConfig.java is the configuration for using AWS DynamoDB, which specifies the keys to access AWS DynamoDB.
+
+---
 ### DAO(Data Access Operation):
 The layer that is close to datasource.  
 #### PersonDao.java
