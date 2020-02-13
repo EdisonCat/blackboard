@@ -19,27 +19,25 @@ public class PersonService {
         this.personDao = personDao;
     }
 
-    public boolean addPerson(Person person) {
-        return personDao.addPerson(person);
+    public boolean addPerson(Person person, String type) {
+        return personDao.addPerson(person, type);
     }
 
-    public List<Person> getAllStudents() {
-        return personDao.selectAllStudents();
+    public List<Person> getAllPeople(String personType) {
+        if(personType.equals("student")) return personDao.selectAllStudents();
+        else if(personType.equals("professor")) return personDao.selectAllProfessors();
+        return null;
     }
 
-    public List<Person> getAllProfessors() {
-        return personDao.selectAllProfessors();
+    public Optional<Person> getPersonById(UUID id, String personType) {
+        return personDao.selectPersonById(id, personType);
     }
 
-    public Optional<Person> getPersonById(UUID id) {
-        return personDao.selectPersonById(id);
+    public boolean deletePersonById(UUID id, String personType) {
+        return personDao.deletePersonById(id, personType);
     }
 
-    public boolean deletePersonById(UUID id) {
-        return personDao.deletePersonById(id);
-    }
-
-    public boolean updatePersonById(UUID id, Person person) {
-        return personDao.updatePersonById(id, person);
+    public boolean updatePersonById(UUID id, Person person, String personType) {
+        return personDao.updatePersonById(id, person, personType);
     }
 }
