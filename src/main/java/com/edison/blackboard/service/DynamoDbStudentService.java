@@ -20,8 +20,12 @@ import java.util.UUID;
 public class DynamoDbStudentService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DynamoDBMapper.class);
 
+    private final DynamoDBMapper mapper;
+
     @Autowired
-    private DynamoDBMapper mapper;
+    public DynamoDbStudentService(DynamoDBMapper mapper) {
+        this.mapper = mapper;
+    }
 
     public void insertStudent(Student student) {
         mapper.save(student);
