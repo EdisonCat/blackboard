@@ -15,7 +15,7 @@ public class Person {
         this.courseSet = new HashSet<>();
         this.id = id;
         this.name = name;
-        this.program = new Program(program.getId(), program);
+//        this.program = new Program(program.getId(), program);
     }
     public String getName() {
         return this.name;
