@@ -50,7 +50,6 @@ public class DynamoDbCourseService {
         return mapper.scan(Course.class, scanExpression);
     }
 
-
     public void deleteCourse(Course course) {
         mapper.delete(course);
     }
