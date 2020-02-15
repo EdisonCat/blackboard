@@ -58,15 +58,15 @@ CourseController.java is the set of APIs that can be used to call CourseService.
   
   for student list:
    
-  ```localhost:8080/api/blackboard/student```
+  ```localhost:8080/api/blackboard/dynamodb/student```
   
   for professor list: 
   
-  ```localhost:8080/api/blackboard/professor```
+  ```localhost:8080/api/blackboard/dynamodb/professor```
   
   for program list: 
   
-  ```localhost:8080/api/blackboard/program```
+  ```localhost:8080/api/blackboard/dynamodb/program```
 
 #### Thrid-party software(Postman)
 1.Open Postman.
