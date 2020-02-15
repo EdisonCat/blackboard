@@ -21,7 +21,7 @@ public class CourseDao {
     }
 
     public boolean insertCourse(UUID id, Course course) {
-        courseList.add(new Course(id, course));
+//        courseList.add(new Course(id, course));
         return true;
     }
 
@@ -37,15 +37,16 @@ public class CourseDao {
     }
 
     public boolean updateCourseById(UUID id, Course course) {
-        Course newCourse = new Course(id, course.getName());
-        return selectCourseById(id).map(course1 -> {
-            int index = courseList.indexOf(course1);
-            if(index >= 0) {
-                courseList.set(0, newCourse);
-                return true;
-            }
-            return false;
-        }).orElse(false);
+//        Course newCourse = new Course(id, course.getName());
+//        return selectCourseById(id).map(course1 -> {
+//            int index = courseList.indexOf(course1);
+//            if(index >= 0) {
+//                courseList.set(0, newCourse);
+//                return true;
+//            }
+//            return false;
+//        }).orElse(false);
+        return true;
     }
 
     public Optional<Course> selectCourseById(UUID id) {
