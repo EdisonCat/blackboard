@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RequestMapping("api/blackboard/dynamodb/student")
@@ -29,6 +30,11 @@ public class DynamoDbStudentController {
     public ResponseEntity<Student> getStudentById(@PathVariable("id") UUID id) {
         Student student = dynamoDbStudentService.getStudentById(id);
         return new ResponseEntity<>(student, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public List<Student> getAllStudents() {
+        return dynamoDbStudentService.getAllStudents();
     }
 
     @PutMapping

@@ -2,6 +2,7 @@ package com.edison.blackboard.service;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -43,6 +45,12 @@ public class DynamoDbStudentService {
             LOGGER.error(e.getMessage());
         }
     }
+
+    public List<Student> getAllStudents() {
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+        return mapper.scan(Student.class, scanExpression);
+    }
+
 
     public void deleteStudent(Student student) {
         mapper.delete(student);
