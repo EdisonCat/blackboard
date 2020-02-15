@@ -19,16 +19,16 @@ public class PersonDao {
     private static List<Person> professorList = new ArrayList<>();
     static {
         //add students
-        studentList.add(new Student(UUID.randomUUID(),"Larry", getProgramByIndex(2)));
-        studentList.add(new Student(UUID.randomUUID(),"Edison",getProgramByIndex(0)));
-
-        //add professors
-        professorList.add(new Professor(UUID.randomUUID(), "Tom", getProgramByIndex(0)));
-        professorList.add(new Professor(UUID.randomUUID(), "Riddle", getProgramByIndex(0)));
-        professorList.get(0).addCourse(new Course(UUID.randomUUID(), "History of Magic"));
-        professorList.get(0).addCourse(new Course(UUID.randomUUID(), "Potions"));
-        professorList.get(1).addCourse(new Course(UUID.randomUUID(), "Defense Against the Dark Arts"));
-        professorList.get(1).addCourse(new Course(UUID.randomUUID(), "Herbology"));
+//        studentList.add(new Student(UUID.randomUUID(),"Larry", getProgramByIndex(2)));
+//        studentList.add(new Student(UUID.randomUUID(),"Edison",getProgramByIndex(0)));
+//
+//        //add professors
+//        professorList.add(new Professor(UUID.randomUUID(), "Tom", getProgramByIndex(0)));
+//        professorList.add(new Professor(UUID.randomUUID(), "Riddle", getProgramByIndex(0)));
+//        professorList.get(0).addCourse(new Course(UUID.randomUUID(), "History of Magic"));
+//        professorList.get(0).addCourse(new Course(UUID.randomUUID(), "Potions"));
+//        professorList.get(1).addCourse(new Course(UUID.randomUUID(), "Defense Against the Dark Arts"));
+//        professorList.get(1).addCourse(new Course(UUID.randomUUID(), "Herbology"));
     }
 
     public boolean addPerson(Person person, String personType) {
