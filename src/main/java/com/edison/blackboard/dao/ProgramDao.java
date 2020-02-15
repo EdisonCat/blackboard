@@ -12,9 +12,9 @@ import java.util.UUID;
 public class ProgramDao {
     private static List<Program> programList = new ArrayList<>();
     static {
-        programList.add(new Program(UUID.randomUUID(), "Information Systems"));
-        programList.add(new Program(UUID.randomUUID(), "Computer Science"));
-        programList.add(new Program(UUID.randomUUID(), "Computer Science Align"));
+//        programList.add(new Program(UUID.randomUUID(), "Information Systems"));
+//        programList.add(new Program(UUID.randomUUID(), "Computer Science"));
+//        programList.add(new Program(UUID.randomUUID(), "Computer Science Align"));
     }
 
     public boolean addProgram(Program program) {
@@ -28,7 +28,7 @@ public class ProgramDao {
     }
 
     private boolean insertProgram(UUID id, Program program) {
-        programList.add(new Program(id, program));
+//        programList.add(new Program(id, program));
         return true;
     }
 
@@ -48,14 +48,15 @@ public class ProgramDao {
     }
 
     public boolean updateProgramById(UUID id, Program program) {
-        Program newProgram = new Program(id, program.getName());
-        return selectProgramById(id).map(program1 -> {
-            int index = programList.indexOf(program1);
-            if(index >= 0) {
-                programList.set(index, newProgram);
-                return true;
-            }
-            return false;
-        }).orElse(false);
+//        Program newProgram = new Program(id, program.getName());
+//        return selectProgramById(id).map(program1 -> {
+//            int index = programList.indexOf(program1);
+//            if(index >= 0) {
+//                programList.set(index, newProgram);
+//                return true;
+//            }
+//            return false;
+//        }).orElse(false);
+        return true;
     }
 }
