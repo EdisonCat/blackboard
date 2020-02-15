@@ -1,4 +1,4 @@
-package com.edison.blackboard.config;
+package com.edison.blackboard.dao;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;

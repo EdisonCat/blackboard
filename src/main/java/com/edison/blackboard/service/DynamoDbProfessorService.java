@@ -6,7 +6,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
-import com.edison.blackboard.model.Student;
+import com.edison.blackboard.model.Professor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,47 +18,47 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
-public class DynamoDbStudentService {
+public class DynamoDbProfessorService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DynamoDBMapper.class);
 
     private final DynamoDBMapper mapper;
 
     @Autowired
-    public DynamoDbStudentService(DynamoDBMapper mapper) {
+    public DynamoDbProfessorService(DynamoDBMapper mapper) {
         this.mapper = mapper;
     }
 
-    public void insertStudent(Student student) {
-        mapper.save(student);
+    public void insertProfessor(Professor professor) {
+        mapper.save(professor);
     }
 
-    public Student getStudentById(UUID id) {
-        return mapper.load(Student.class, id);
+    public Professor getProfessorById(UUID id) {
+        return mapper.load(Professor.class, id);
     }
 
-    public void updateStudent(Student student) {
+    public void updateProfessor(Professor professor) {
         try {
-            mapper.save(student, buildDynamoDBSaveExpression(student));
+            mapper.save(professor, buildDynamoDBSaveExpression(professor));
         }
         catch (ConditionalCheckFailedException e) {
             LOGGER.error(e.getMessage());
         }
     }
 
-    public List<Student> getAllStudents() {
+    public List<Professor> getAllProfessors() {
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
-        return mapper.scan(Student.class, scanExpression);
+        return mapper.scan(Professor.class, scanExpression);
     }
 
 
-    public void deleteStudent(Student student) {
-        mapper.delete(student);
+    public void deleteProfessor(Professor professor) {
+        mapper.delete(professor);
     }
 
-    public DynamoDBSaveExpression buildDynamoDBSaveExpression(Student student) {
+    public DynamoDBSaveExpression buildDynamoDBSaveExpression(Professor professor) {
         DynamoDBSaveExpression saveExpression = new DynamoDBSaveExpression();
         Map<String, ExpectedAttributeValue> expectedAttributeValueMap = new HashMap<>();
-        expectedAttributeValueMap.put("studentid", new ExpectedAttributeValue(new AttributeValue(student.getId().toString())));
+        expectedAttributeValueMap.put("professorid", new ExpectedAttributeValue(new AttributeValue(professor.getId().toString())));
         saveExpression.setExpected(expectedAttributeValueMap);
         return saveExpression;
     }
