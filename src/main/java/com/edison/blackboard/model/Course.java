@@ -78,4 +78,14 @@ public class Course implements Serializable {
         return this;
     }
 
+    public Course removeStudent(Student student) {
+        for(int i = 0; i < studentList.size(); i++) {
+            if(studentList.get(i).getId().equals(student.getId())) {
+                studentList.remove(i);
+                return this;
+            }
+        }
+        return null;
+    }
+
 }

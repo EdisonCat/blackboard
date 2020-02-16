@@ -1,6 +1,7 @@
 package com.edison.blackboard.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
+import org.springframework.boot.origin.SystemEnvironmentOrigin;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -65,5 +66,14 @@ public class Student implements Serializable {
     public Student addCourse(Course course) {
         this.courseList.add(course);
         return this;
+    }
+
+    public Student removeCourse(Course course) {
+        for(int i = 0; i < courseList.size(); i++)
+            if(courseList.get(i).getId().equals(course.getId())) {
+                courseList.remove(i);
+                return this;
+            }
+        return null;
     }
 }

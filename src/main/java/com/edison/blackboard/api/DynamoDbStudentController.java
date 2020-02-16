@@ -66,4 +66,13 @@ public class DynamoDbStudentController {
         dynamoDbStudentService.deleteStudent(getStudentById(id).getBody());
     }
 
+    @DeleteMapping(path = "{studentId}/course/{courseId}")
+    public boolean removeCourse(@PathVariable("studentId") UUID studentId, @PathVariable("courseId") UUID courseId) {
+        dynamoDbStudentService.updateStudent(dynamoDbStudentService.getStudentById(studentId)
+                .removeCourse(dynamoDbCourseService.getCourseById(courseId)));
+        dynamoDbCourseService.updateCourse(dynamoDbCourseService.getCourseById(courseId)
+                .removeStudent(dynamoDbStudentService.getStudentById(studentId)));
+        return true;
+    }
+
 }
