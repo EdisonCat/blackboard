@@ -3,6 +3,7 @@ package com.edison.blackboard.model;
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,7 +14,7 @@ public class Student implements Serializable {
     private UUID id;
     private String name;
     private String program;
-    private List<Course> courseList;
+    private List<Course> courseList = new ArrayList<>();
 
     public Student(Student student) {
         setId(student.getId());
@@ -59,5 +60,10 @@ public class Student implements Serializable {
 
     public void setCourseList(List<Course> courseList) {
         this.courseList = courseList;
+    }
+
+    public Student addCourse(Course course) {
+        this.courseList.add(course);
+        return this;
     }
 }

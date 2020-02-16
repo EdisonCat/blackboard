@@ -1,6 +1,8 @@
 package com.edison.blackboard.api;
 
+import com.edison.blackboard.model.Course;
 import com.edison.blackboard.model.Student;
+import com.edison.blackboard.service.DynamoDbCourseService;
 import com.edison.blackboard.service.DynamoDbStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,10 +16,12 @@ import java.util.UUID;
 @RestController
 public class DynamoDbStudentController {
     private final DynamoDbStudentService dynamoDbStudentService;
+    private final DynamoDbCourseService dynamoDbCourseService;
 
     @Autowired
-    public DynamoDbStudentController(DynamoDbStudentService dynamoDbStudentService) {
+    public DynamoDbStudentController(DynamoDbStudentService dynamoDbStudentService, DynamoDbCourseService dynamoDbCourseService) {
         this.dynamoDbStudentService = dynamoDbStudentService;
+        this.dynamoDbCourseService = dynamoDbCourseService;
     }
 
     @PostMapping
@@ -35,6 +39,21 @@ public class DynamoDbStudentController {
     @GetMapping
     public List<Student> getAllStudents() {
         return dynamoDbStudentService.getAllStudents();
+    }
+
+    @GetMapping(path = "{studentId}/course")
+    public List<Course> getAllCourses(@PathVariable("studentId") UUID studentId) {
+        return dynamoDbStudentService.getStudentById(studentId).getCourseList();
+    }
+
+    @PutMapping(path = "{studentId}/course/{courseId}")
+    public boolean addCourse(@PathVariable("studentId") UUID studentId,
+                             @PathVariable("courseId") UUID courseId) {
+        dynamoDbStudentService.updateStudent(dynamoDbStudentService.getStudentById(studentId)
+                .addCourse(dynamoDbCourseService.getCourseById(courseId)));
+        dynamoDbCourseService.updateCourse(dynamoDbCourseService.getCourseById(courseId)
+                .addStudent(dynamoDbStudentService.getStudentById(studentId)));
+        return true;
     }
 
     @PutMapping
