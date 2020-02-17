@@ -1,7 +1,6 @@
 package com.edison.blackboard.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
-import org.springframework.boot.origin.SystemEnvironmentOrigin;
 
 import java.io.Serializable;
 import java.util.ArrayList;

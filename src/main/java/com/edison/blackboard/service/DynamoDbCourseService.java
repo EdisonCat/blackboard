@@ -10,6 +10,7 @@ import com.edison.blackboard.model.Course;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -22,10 +23,16 @@ public class DynamoDbCourseService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DynamoDBMapper.class);
 
     private final DynamoDBMapper mapper;
+    private final DynamoDbStudentService dynamoDbStudentService;
+    private final DynamoDbProfessorService dynamoDbProfessorService;
 
     @Autowired
-    public DynamoDbCourseService(DynamoDBMapper mapper) {
+    public DynamoDbCourseService(DynamoDBMapper mapper,
+                                 @Lazy DynamoDbStudentService dynamoDbStudentService,
+                                 DynamoDbProfessorService dynamoDbProfessorService) {
         this.mapper = mapper;
+        this.dynamoDbStudentService = dynamoDbStudentService;
+        this.dynamoDbProfessorService = dynamoDbProfessorService;
     }
 
     public void insertCourse(Course course) {
@@ -60,5 +67,43 @@ public class DynamoDbCourseService {
         expectedAttributeValueMap.put("courseid", new ExpectedAttributeValue(new AttributeValue(course.getId().toString())));
         saveExpression.setExpected(expectedAttributeValueMap);
         return saveExpression;
+    }
+
+    public boolean addProfessor(UUID courseId, UUID professorId) {
+        updateCourse(getCourseById(courseId).setProfessor(dynamoDbProfessorService.getProfessorById(professorId)));
+        dynamoDbProfessorService.updateProfessor(dynamoDbProfessorService.getProfessorById(professorId)
+                .addCourse(getCourseById(courseId)));
+        return true;
+    }
+
+    public boolean addTa(UUID courseId, UUID studentId) {
+        updateCourse(getCourseById(courseId).setTa(dynamoDbStudentService.getStudentById(studentId)));
+        return true;
+    }
+
+    public boolean removeProfessor(UUID courseId, UUID professorId) {
+        updateCourse(getCourseById(courseId).removeProfessor(dynamoDbProfessorService.getProfessorById(professorId)));
+        dynamoDbProfessorService.updateProfessor(dynamoDbProfessorService.getProfessorById(professorId)
+                .removeCourse(getCourseById(courseId)));
+        return true;
+    }
+
+    public boolean removeTa(UUID courseId, UUID studentId) {
+        updateCourse(getCourseById(courseId).removeTa(dynamoDbStudentService.getStudentById(studentId)));
+        return true;
+    }
+
+    public boolean addStudent(UUID courseId, UUID studentId) {
+        updateCourse(getCourseById(courseId).addStudent(dynamoDbStudentService.getStudentById(studentId)));
+        dynamoDbStudentService.updateStudent(dynamoDbStudentService.getStudentById(studentId)
+                .addCourse(getCourseById(courseId)));
+        return true;
+    }
+
+    public boolean removeStudent(UUID courseId, UUID studentId) {
+        updateCourse(getCourseById(courseId).removeStudent(dynamoDbStudentService.getStudentById(studentId)));
+        dynamoDbStudentService.updateStudent(dynamoDbStudentService.getStudentById(studentId)
+                .removeCourse(getCourseById(courseId)));
+        return true;
     }
 }

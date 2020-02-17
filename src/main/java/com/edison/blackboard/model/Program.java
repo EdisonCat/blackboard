@@ -12,7 +12,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 @DynamoDBTable(tableName = "program")
 public class Program implements Serializable {
-    private String name;
+    private String name = "";
     private UUID id;
     private List<Student> studentList = new ArrayList<>();
     private List<Professor> professorList = new ArrayList<>();

@@ -26,9 +26,9 @@ public class DynamoDbCourseController {
         return true;
     }
 
-    @GetMapping(path = "{id}")
-    public ResponseEntity<Course> getCourseById(@PathVariable("id") UUID id) {
-        Course course = dynamoDbCourseService.getCourseById(id);
+    @GetMapping(path = "{courseId}")
+    public ResponseEntity<Course> getCourseById(@PathVariable("courseId") UUID courseId) {
+        Course course = dynamoDbCourseService.getCourseById(courseId);
         return new ResponseEntity<>(course, HttpStatus.OK);
     }
 
@@ -42,9 +42,40 @@ public class DynamoDbCourseController {
         dynamoDbCourseService.updateCourse(course);
     }
 
-    @DeleteMapping(path = "{id}")
-    public void deleteCourseById(@PathVariable("id") UUID id) {
-        dynamoDbCourseService.deleteCourse(getCourseById(id).getBody());
+    @PutMapping(path = "{courseId}/professor/{professorId}")
+    public boolean addProfessor(@PathVariable("professorId") UUID professorId,
+                                @PathVariable("courseId") UUID courseId) {
+        return dynamoDbCourseService.addProfessor(courseId, professorId);
     }
 
+    @PutMapping(path = "{courseId}/ta/{studentId}")
+    public boolean addTa(@PathVariable("courseId") UUID courseId, @PathVariable("studentId") UUID studentId) {
+        return dynamoDbCourseService.addTa(courseId, studentId);
+    }
+
+    @PutMapping(path = "{courseId}/student/{studentId}")
+    public boolean addStudent(@PathVariable("courseId") UUID courseId, @PathVariable("studentId") UUID studentId) {
+        return dynamoDbCourseService.addStudent(courseId, studentId);
+    }
+
+    @DeleteMapping(path = "{courseId}/student/{studentId}")
+    public boolean removeStudent(@PathVariable("courseId") UUID courseId, @PathVariable("studentId") UUID studentId) {
+        return dynamoDbCourseService.removeStudent(courseId, studentId);
+    }
+
+    @DeleteMapping(path = "{courseId}")
+    public void deleteCourseById(@PathVariable("courseId") UUID courseId) {
+        dynamoDbCourseService.deleteCourse(getCourseById(courseId).getBody());
+    }
+
+    @DeleteMapping(path = "{courseId}/professor/{professorId}")
+    public boolean removeProfessor(@PathVariable("professorId") UUID professorId,
+                                   @PathVariable("courseId") UUID courseId) {
+        return dynamoDbCourseService.removeProfessor(courseId, professorId);
+    }
+
+    @DeleteMapping(path = "{courseId}/ta/{studentId}")
+    public boolean removeTa(@PathVariable("courseId") UUID courseId, @PathVariable("studentId") UUID studentId) {
+        return dynamoDbCourseService.removeTa(courseId, studentId);
+    }
 }

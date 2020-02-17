@@ -26,9 +26,9 @@ public class DynamoDbProfessorController {
         return true;
     }
 
-    @GetMapping(path = "{id}")
-    public ResponseEntity<Professor> getProfessorById(@PathVariable("id") UUID id) {
-        Professor professor = dynamoDbProfessorService.getProfessorById(id);
+    @GetMapping(path = "{professorId}")
+    public ResponseEntity<Professor> getProfessorById(@PathVariable("professorId") UUID professorId) {
+        Professor professor = dynamoDbProfessorService.getProfessorById(professorId);
         return new ResponseEntity<>(professor, HttpStatus.OK);
     }
 
@@ -42,9 +42,19 @@ public class DynamoDbProfessorController {
         dynamoDbProfessorService.updateProfessor(professor);
     }
 
-    @DeleteMapping(path = "{id}")
-    public void deleteProfessorById(@PathVariable("id") UUID id) {
-        dynamoDbProfessorService.deleteProfessor(getProfessorById(id).getBody());
+    @PutMapping(path = "{professorId}/course/{courseId}")
+    public boolean addCourse(@PathVariable("professorId") UUID professorId, @PathVariable("courseId") UUID courseId) {
+        return dynamoDbProfessorService.addCourse(professorId, courseId);
+    }
+
+    @DeleteMapping(path = "{professorId}/course/{courseId}")
+    public boolean removeCourse(@PathVariable("professorId") UUID professorId, @PathVariable("courseId") UUID courseId) {
+        return dynamoDbProfessorService.removeCourse(professorId, courseId);
+    }
+
+    @DeleteMapping(path = "{professorId}")
+    public void deleteProfessorById(@PathVariable("professorId") UUID professorId) {
+        dynamoDbProfessorService.deleteProfessor(getProfessorById(professorId).getBody());
     }
 
 }

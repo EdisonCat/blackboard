@@ -10,6 +10,7 @@ import com.edison.blackboard.model.Professor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -22,10 +23,12 @@ public class DynamoDbProfessorService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DynamoDBMapper.class);
 
     private final DynamoDBMapper mapper;
+    private final DynamoDbCourseService dynamoDbCourseService;
 
     @Autowired
-    public DynamoDbProfessorService(DynamoDBMapper mapper) {
+    public DynamoDbProfessorService(DynamoDBMapper mapper, @Lazy DynamoDbCourseService dynamoDbCourseService) {
         this.mapper = mapper;
+        this.dynamoDbCourseService = dynamoDbCourseService;
     }
 
     public void insertProfessor(Professor professor) {
@@ -61,5 +64,19 @@ public class DynamoDbProfessorService {
         expectedAttributeValueMap.put("professorid", new ExpectedAttributeValue(new AttributeValue(professor.getId().toString())));
         saveExpression.setExpected(expectedAttributeValueMap);
         return saveExpression;
+    }
+
+    public boolean addCourse(UUID professorId, UUID courseId) {
+        updateProfessor(getProfessorById(professorId).addCourse(dynamoDbCourseService.getCourseById(courseId)));
+        dynamoDbCourseService.updateCourse(dynamoDbCourseService.getCourseById(courseId)
+                .setProfessor(getProfessorById(professorId)));
+        return true;
+    }
+
+    public boolean removeCourse(UUID professorId, UUID courseId) {
+        updateProfessor(getProfessorById(professorId).removeCourse(dynamoDbCourseService.getCourseById(courseId)));
+        dynamoDbCourseService.updateCourse(dynamoDbCourseService.getCourseById(courseId)
+                .removeProfessor(getProfessorById(professorId)));
+        return true;
     }
 }

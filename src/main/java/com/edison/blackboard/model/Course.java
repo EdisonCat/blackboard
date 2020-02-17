@@ -60,8 +60,9 @@ public class Course implements Serializable {
         return professor;
     }
 
-    public void setProfessor(Professor professor) {
+    public Course setProfessor(Professor professor) {
         this.professor = professor;
+        return this;
     }
 
     @DynamoDBAttribute
@@ -69,8 +70,15 @@ public class Course implements Serializable {
         return ta;
     }
 
-    public void setTa(Student ta) {
+    public Course setTa(Student ta) {
         this.ta = ta;
+        return this;
+    }
+
+    public Course removeTa(Student ta) {
+        if(this.ta.getId().equals(ta.getId())) setTa(new Student());
+        else System.out.println("TA Not Found");
+        return this;
     }
 
     public Course addStudent(Student student) {
@@ -86,6 +94,12 @@ public class Course implements Serializable {
             }
         }
         return null;
+    }
+
+    public Course removeProfessor(Professor professor) {
+        if(this.professor.getId().equals(professor.getId())) setProfessor(new Professor());
+        else System.out.println("Professor Not Found");
+        return this;
     }
 
 }

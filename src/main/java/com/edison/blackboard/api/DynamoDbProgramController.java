@@ -26,9 +26,9 @@ public class DynamoDbProgramController {
         return true;
     }
 
-    @GetMapping(path = "{id}")
-    public ResponseEntity<Program> getProgramById(@PathVariable("id") UUID id) {
-        Program program = dynamoDbProgramService.getProgramById(id);
+    @GetMapping(path = "{programId}")
+    public ResponseEntity<Program> getProgramById(@PathVariable("programId") UUID programId) {
+        Program program = dynamoDbProgramService.getProgramById(programId);
         return new ResponseEntity<>(program, HttpStatus.OK);
     }
 
@@ -42,9 +42,19 @@ public class DynamoDbProgramController {
         dynamoDbProgramService.updateProgram(program);
     }
 
-    @DeleteMapping(path = "{id}")
-    public void deleteProgramById(@PathVariable("id") UUID id) {
-        dynamoDbProgramService.deleteProgram(getProgramById(id).getBody());
+    @PutMapping(path = "{programId}/student/{studentId}")
+    public boolean addStudent(@PathVariable("programId") UUID programId, @PathVariable("studentId") UUID studentId) {
+        return dynamoDbProgramService.addStudent(programId, studentId);
+    }
+
+    @DeleteMapping(path = "{programId}/student/{studentId}")
+    public boolean removeStudent(@PathVariable("programId") UUID programId, @PathVariable("studentId") UUID studentId) {
+        return dynamoDbProgramService.removeStudent(programId, studentId);
+    }
+
+    @DeleteMapping(path = "{programId}")
+    public void deleteProgramById(@PathVariable("programId") UUID programId) {
+        dynamoDbProgramService.deleteProgram(getProgramById(programId).getBody());
     }
 
 }

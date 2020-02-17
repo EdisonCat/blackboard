@@ -10,6 +10,7 @@ import com.edison.blackboard.model.Program;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -22,10 +23,12 @@ public class DynamoDbProgramService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DynamoDBMapper.class);
 
     private final DynamoDBMapper mapper;
+    private final DynamoDbStudentService dynamoDbStudentService;
 
     @Autowired
-    public DynamoDbProgramService(DynamoDBMapper mapper) {
+    public DynamoDbProgramService(DynamoDBMapper mapper, @Lazy DynamoDbStudentService dynamoDbStudentService) {
         this.mapper = mapper;
+        this.dynamoDbStudentService = dynamoDbStudentService;
     }
 
     public void insertProgram(Program program) {
@@ -60,5 +63,19 @@ public class DynamoDbProgramService {
         expectedAttributeValueMap.put("programid", new ExpectedAttributeValue(new AttributeValue(program.getId().toString())));
         saveExpression.setExpected(expectedAttributeValueMap);
         return saveExpression;
+    }
+
+    public boolean addStudent(UUID programId, UUID studentId) {
+        updateProgram(getProgramById(programId).addStudent(dynamoDbStudentService.getStudentById(studentId)));
+        dynamoDbStudentService.updateStudent(dynamoDbStudentService.getStudentById(studentId)
+                .setProgram(getProgramById(programId).getName()));
+        return true;
+    }
+
+    public boolean removeStudent(UUID programId, UUID studentId) {
+        updateProgram(getProgramById(programId).removeStudent(dynamoDbStudentService.getStudentById(studentId)));
+        dynamoDbStudentService.updateStudent(dynamoDbStudentService.getStudentById(studentId)
+                .removeProgram(getProgramById(programId)));
+        return true;
     }
 }
