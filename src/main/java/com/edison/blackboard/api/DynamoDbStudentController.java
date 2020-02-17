@@ -3,6 +3,7 @@ package com.edison.blackboard.api;
 import com.edison.blackboard.model.Course;
 import com.edison.blackboard.model.Student;
 import com.edison.blackboard.service.DynamoDbCourseService;
+import com.edison.blackboard.service.DynamoDbProgramService;
 import com.edison.blackboard.service.DynamoDbStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,11 +18,15 @@ import java.util.UUID;
 public class DynamoDbStudentController {
     private final DynamoDbStudentService dynamoDbStudentService;
     private final DynamoDbCourseService dynamoDbCourseService;
+    private final DynamoDbProgramService dynamoDbProgramService;
 
     @Autowired
-    public DynamoDbStudentController(DynamoDbStudentService dynamoDbStudentService, DynamoDbCourseService dynamoDbCourseService) {
+    public DynamoDbStudentController(DynamoDbStudentService dynamoDbStudentService,
+                                     DynamoDbCourseService dynamoDbCourseService,
+                                     DynamoDbProgramService dynamoDbProgramService) {
         this.dynamoDbStudentService = dynamoDbStudentService;
         this.dynamoDbCourseService = dynamoDbCourseService;
+        this.dynamoDbProgramService = dynamoDbProgramService;
     }
 
     @PostMapping
@@ -61,6 +66,15 @@ public class DynamoDbStudentController {
         dynamoDbStudentService.updateStudent(student);
     }
 
+    @PutMapping(path = "{studentId}/program/{programId}")
+    public boolean addProgram(@PathVariable("studentId") UUID studentId, @PathVariable("programId") UUID programId) {
+        dynamoDbStudentService.updateStudent(dynamoDbStudentService.getStudentById(studentId)
+                .setProgram(dynamoDbProgramService.getProgramById(programId).getName()));
+        dynamoDbProgramService.updateProgram(dynamoDbProgramService.getProgramById(programId)
+                .addStudent(dynamoDbStudentService.getStudentById(studentId)));
+        return true;
+    }
+
     @DeleteMapping(path = "{id}")
     public void deleteStudentById(@PathVariable("id") UUID id) {
         dynamoDbStudentService.deleteStudent(getStudentById(id).getBody());
@@ -71,6 +85,15 @@ public class DynamoDbStudentController {
         dynamoDbStudentService.updateStudent(dynamoDbStudentService.getStudentById(studentId)
                 .removeCourse(dynamoDbCourseService.getCourseById(courseId)));
         dynamoDbCourseService.updateCourse(dynamoDbCourseService.getCourseById(courseId)
+                .removeStudent(dynamoDbStudentService.getStudentById(studentId)));
+        return true;
+    }
+
+    @DeleteMapping(path = "{studentId}/program/{programId}")
+    public boolean removeProgram(@PathVariable("studentId") UUID studentId, @PathVariable("programId") UUID programId) {
+        dynamoDbStudentService.updateStudent(dynamoDbStudentService.getStudentById(studentId)
+                .removeProgram(dynamoDbProgramService.getProgramById(programId)));
+        dynamoDbProgramService.updateProgram(dynamoDbProgramService.getProgramById(programId)
                 .removeStudent(dynamoDbStudentService.getStudentById(studentId)));
         return true;
     }

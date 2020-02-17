@@ -50,8 +50,15 @@ public class Student implements Serializable {
         return program;
     }
 
-    public void setProgram(String program) {
+    public Student setProgram(String program) {
         this.program = program;
+        return this;
+    }
+
+    public Student removeProgram(Program program) {
+        if(this.getProgram().equals(program.getName())) setProgram("");
+        else System.out.println("Program Not Found");
+        return this;
     }
 
     @DynamoDBAttribute

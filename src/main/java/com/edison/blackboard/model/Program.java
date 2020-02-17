@@ -1,6 +1,7 @@
 package com.edison.blackboard.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,9 +14,9 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 public class Program implements Serializable {
     private String name;
     private UUID id;
-    private List<Student> studentList;
-    private List<Professor> professorList;
-    private List<Course> courseList;
+    private List<Student> studentList = new ArrayList<>();
+    private List<Professor> professorList = new ArrayList<>();
+    private List<Course> courseList = new ArrayList<>();
 
     public Program(Program program) {
         setName(program.getName());
@@ -73,4 +74,18 @@ public class Program implements Serializable {
         this.courseList = courseList;
     }
 
+    public Program addStudent(Student student) {
+        this.studentList.add(student);
+        return this;
+    }
+
+    public Program removeStudent(Student student) {
+        for(int i = 0; i < studentList.size(); i++) {
+            if(studentList.get(i).getId().equals(student.getId())) {
+                studentList.remove(i);
+                return this;
+            }
+        }
+        return null;
+    }
 }
