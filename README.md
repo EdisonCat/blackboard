@@ -1,5 +1,15 @@
 # blackboard
-Implement blackboard system with Spring Boot
+Implement blackboard system RESTful APIs with Spring Boot
+
+Language: Java
+
+Framework: Spring Boot
+
+Database: Amazon Web Services DynamoDB
+
+Test: Postman
+
+### If this project is helpful for your coursework/work, please give me a ★STAR★! Thanks!
 
 ---
 ### Structure
@@ -8,13 +18,13 @@ Implement blackboard system with Spring Boot
 ---
 ### Service: 
 Bridge/Layer between DAO and APIs.
-#### PersonService.java:
+#### PersonService.java: (for dummy data)
 PersonService.java is used to call PersonDao.java when APIs in PersonController.java are called.
 
-#### ProgramService.java:
+#### ProgramService.java: (for dummy data)
 ProgramService.java is used to call ProgramDao.java when APIs in ProgramController.java are called.
 
-#### CourseService.java:
+#### CourseService.java: (for dummy data)
 CourseService.java is used to call CourseDao.java when APIs in CourseController.java are called.
 
 #### DynamoDbCourseService.java: (for real data in DynamoDB)
@@ -70,28 +80,113 @@ The set of APIs that can be used by users directly to call service and then dao/
 
 ---
 ### Usage
+1. Before using the APIs, you need to register for an AWS account and create 4 tables named student, professor, course, 
+program respectively in DynamoDB. The primary keys of them are studentid, professorid, courseid, and programid respectively.
+(all lower case)
+
+2. Go to IAM(AWS Identity Access Management), create a group of developer and add AdministratorAccess as a policy of that 
+group. Create an user and add it to the group you created. Copy the access and access secret key to local machine and 
+end point url, region info. Store the keys in application.properties in resources folder in this project.
+
+3. Enable auto-import to let your IDE download all the dependencies for you. Run the project(a Maven project).
+
+##### DO NOT PUSH application.properties of yours to GitHub!
+
 #### Browser(Get request only currently)
 1.Run the main function, which will start the server.
 
 2.Open your browser and type in:
-  
-  for student list:
-   
-  ```localhost:8080/api/blackboard/dynamodb/student```
-  
-  for professor list: 
-  
-  ```localhost:8080/api/blackboard/dynamodb/professor```
-  
-  for program list: 
-  
-  ```localhost:8080/api/blackboard/dynamodb/program```
-  
-  for course list:
-  
-  ```localhost:8080/api/blackboard/dynamodb/course```
 
+---
+##### Course:
+for course list: GET
+```localhost:8080/api/blackboard/dynamodb/course```
+
+for specific course info: GET
+```localhost:8080/api/blackboard/dynamodb/course/{courseId}```
+
+for adding professor to course(will do adding course to professor automatically): PUT
+```localhost:8080/api/blackboard/dynamodb/course/{courseId}/professor/{professorId}```
+
+for adding ta to course:
+```localhost:8080/api/blackboard/dynamodb/course/{courseId}/ta/{studentId}```
+  
+for adding student to course(will do adding course to student automatically): PUT
+```localhost:8080/api/blackboard/dynamodb/course/{courseId}/student/{studentId}```
+
+for removing professor from course(will do removing course from professor automatically): DELETE
+```localhost:8080/api/blackboard/dynamodb/course/{courseId}/professor/{professorId}```
+
+for removing ta from course: DELETE
+```localhost:8080/api/blackboard/dynamodb/course/{courseId}/ta/{studentId}```
+
+for removing student from course(will do removing course from student automatically): DELETE
+```localhost:8080/api/blackboard/dynamodb/course/{courseId}/student/{studentId}```
+
+for deleting course from database: DELETE
+```localhost:8080/api/blackboard/dynamodb/course/{courseId}```
+
+---
+##### Student:
+for student list: GET
+```localhost:8080/api/blackboard/dynamodb/student```
+  
+for specific student info: GET
+```localhost:8080/api/blackboard/dynamodb/student/{studentId}```
+
+for course list of a student: GET
+```localhost:8080/api/blackboard/dynamodb/student/{studentId}/course```
+
+for adding course to student(will do adding student to course automatically): PUT
+```localhost:8080/api/blackboard/dynamodb/student/{studentId}/course/{courseId}```
+
+for adding program to student(will do adding student to program automatically): PUT
+```localhost:8080/api/blackboard/dynamodb/student/{studentId}/program/{programId}```
+
+for removing course from student(will do removing student from course automatically): DELETE
+```localhost:8080/api/blackboard/dynamodb/student/{studentId}/course/{courseId}```
+
+for removing program from student(will do removing student from program automatically): DELETE
+```localhost:8080/api/blackboard/dynamodb/student/{studentId}/program/{programId}```
+
+for deleting student from database: DELETE
+```localhost:8080/api/blackboard/dynamodb/student/{studentId}```
+
+---
+##### Professor:
+for professor list: GET
+```localhost:8080/api/blackboard/dynamodb/professor```
+
+for specific professor info: GET
+```localhost:8080/api/blackboard/dynamodb/professor/{professorId}```
+
+for adding course to professor(will do adding professor to course automatically): PUT
+```localhost:8080/api/blackboard/dynamodb/professor/{professorId}/course/{courseId}```
+
+for removing course from professor(will do removing professor from course automatically): DELETE
+```localhost:8080/api/blackboard/dynamodb/professor/{professorId}/course/{courseId}```
+
+for deleting professor from database: DELETE
+```localhost:8080/api/blackboard/dynamodb/professor/{professorId}```
+
+---
+##### Program
+for program list: GET
+```localhost:8080/api/blackboard/dynamodb/program```
+
+for specific program info: GET
+```localhost:8080/api/blackboard/dynamodb/program/{programId}```
+  
+for adding student to program(will do adding program to student automatically): PUT
+```localhost:8080/api/blackboard/dynamodb/program/{programId}/student/{studentId}```
+
+for removing student from program(will do removing program from student automatically): DELETE
+```localhost:8080/api/blackboard/dynamodb/program/{programId}/student/{studentId}```
+
+for deleting program from database: DELETE
+```localhost:8080/api/blackboard/dynamodb/program/{programId}```
+  
 #### Thrid-party software(Postman)
 1.Open Postman.
 
-2.Type in one of the links above, and choose the type of request.
+2.Type in one of the links listed above, and choose the type of request.
