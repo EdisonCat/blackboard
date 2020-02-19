@@ -30,9 +30,9 @@ public class CourseDao {
     }
 
     public boolean deleteCourseById(UUID id) {
-        Optional<Course> toBeDeleted = selectCourseById(id);
-        if(toBeDeleted.isEmpty()) return false;
-        courseList.remove(toBeDeleted.get());
+//        Optional<Course> toBeDeleted = selectCourseById(id);
+//        if(toBeDeleted.isEmpty()) return false;
+//        courseList.remove(toBeDeleted.get());
         return true;
     }
 

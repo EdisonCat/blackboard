@@ -41,9 +41,9 @@ public class ProgramDao {
     }
 
     public boolean deleteProgramById(UUID id) {
-        Optional<Program> toBeDeleted = selectProgramById(id);
-        if(toBeDeleted.isEmpty()) return false;
-        programList.remove(toBeDeleted.get());
+//        Optional<Program> toBeDeleted = selectProgramById(id);
+//        if(toBeDeleted.isEmpty()) return false;
+//        programList.remove(toBeDeleted.get());
         return true;
     }
 

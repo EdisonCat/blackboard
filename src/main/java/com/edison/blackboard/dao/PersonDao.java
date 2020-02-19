@@ -57,12 +57,12 @@ public class PersonDao {
     }
 
     public boolean deletePersonById(UUID id, String personType) {
-        Optional<Person> toBeDeleted = selectPersonById(id, personType);
-        if(toBeDeleted.isEmpty()) return false;
-        if(personType.equals("student"))
-            studentList.remove(toBeDeleted.get());
-        else if(personType.equals("professor"))
-            professorList.remove(toBeDeleted.get());
+//        Optional<Person> toBeDeleted = selectPersonById(id, personType);
+//        if(toBeDeleted.isEmpty()) return false;
+//        if(personType.equals("student"))
+//            studentList.remove(toBeDeleted.get());
+//        else if(personType.equals("professor"))
+//            professorList.remove(toBeDeleted.get());
         return true;
     }
 
