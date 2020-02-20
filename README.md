@@ -9,8 +9,6 @@ Database: Amazon Web Services DynamoDB
 
 Test: Postman
 
-### If this project is helpful for your coursework/work, please give me a ★STAR★! Thanks!
-
 ---
 ### Structure
 #### user -> APIs -> Service -> Data Access Operate -> Datasource
