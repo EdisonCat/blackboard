@@ -12,8 +12,8 @@ import java.util.UUID;
 public class Professor implements Serializable {
     private static final long serialVersionUID = 1L;
     private UUID id;
-    private String name;
-    private String program;
+    private String name = "";
+    private String program = "";
     private List<Course> courseList = new ArrayList<>();
 
     public Professor(Professor professor) {
@@ -21,6 +21,13 @@ public class Professor implements Serializable {
         setName(professor.getName());
         setProgram(professor.getProgram());
         setCourseList(professor.getCourseList());
+    }
+
+    public Professor(Professor professor, boolean light) {
+        if(light) {
+            setId(professor.getId());
+            setName(professor.getName());
+        }
     }
 
     public Professor() {}
@@ -63,7 +70,7 @@ public class Professor implements Serializable {
     }
 
     public Professor addCourse(Course course) {
-        this.courseList.add(course);
+        this.courseList.add(new Course(course, true));
         return this;
     }
 
@@ -75,5 +82,15 @@ public class Professor implements Serializable {
             }
         }
         return null;
+    }
+
+    public Professor addProgram(Program program) {
+        setProgram(program.getName());
+        return this;
+    }
+
+    public Professor removeProgram(Program program) {
+        if(this.program.equals(program.getName())) this.program = "";
+        return this;
     }
 }

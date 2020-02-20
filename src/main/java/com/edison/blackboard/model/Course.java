@@ -17,11 +17,19 @@ public class Course implements Serializable {
     private Student ta;
 
     public Course(Course course) {
-        setName(course.getName());
-        setId(course.getId());
-        setStudentList(course.getStudentList());
-        setTa(course.getTa());
-        setProfessor(course.getProfessor());
+            setName(course.getName());
+            setId(course.getId());
+            setStudentList(course.getStudentList());
+            setTa(course.getTa());
+            setProfessor(course.getProfessor());
+    }
+    public Course(Course course, boolean light) {
+        if(light) {
+            setName(course.getName());
+            setId(course.getId());
+            if(course.ta != null) setTa(new Student(course.getTa(), true));
+            if(course.professor != null) setProfessor(new Professor(course.getProfessor(), true));
+        }
     }
 
     public Course() {
@@ -82,7 +90,7 @@ public class Course implements Serializable {
     }
 
     public Course addStudent(Student student) {
-        this.studentList.add(student);
+        this.studentList.add(new Student(student, true));
         return this;
     }
 
