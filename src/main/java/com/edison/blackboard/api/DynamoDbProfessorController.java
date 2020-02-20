@@ -47,6 +47,16 @@ public class DynamoDbProfessorController {
         return dynamoDbProfessorService.addCourse(professorId, courseId);
     }
 
+    @PutMapping(path = "{professorId}/program/{programId}")
+    public boolean addProgram(@PathVariable("professorId") UUID professorId, @PathVariable("programId") UUID programId) {
+        return dynamoDbProfessorService.addProgram(professorId, programId);
+    }
+
+    @DeleteMapping(path = "{professorId}/program/{programId}")
+    public boolean removeProgram(@PathVariable("professorId") UUID professorId, @PathVariable("programId") UUID programId) {
+        return dynamoDbProfessorService.removeProgram(professorId, programId);
+    }
+
     @DeleteMapping(path = "{professorId}/course/{courseId}")
     public boolean removeCourse(@PathVariable("professorId") UUID professorId, @PathVariable("courseId") UUID courseId) {
         return dynamoDbProfessorService.removeCourse(professorId, courseId);

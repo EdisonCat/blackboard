@@ -1,6 +1,7 @@
 package com.edison.blackboard.api;
 
 import com.edison.blackboard.model.Course;
+import com.edison.blackboard.model.Student;
 import com.edison.blackboard.service.DynamoDbCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,11 @@ public class DynamoDbCourseController {
     @GetMapping
     public List<Course> getAllCourses() {
         return dynamoDbCourseService.getAllCourses();
+    }
+
+    @GetMapping(path = "{courseId}/student")
+    public List<Student> getAllStudents(@PathVariable("courseId") UUID courseId) {
+        return dynamoDbCourseService.getAllStudents(courseId);
     }
 
     @PutMapping
