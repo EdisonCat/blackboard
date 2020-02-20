@@ -7,6 +7,7 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.edison.blackboard.model.Course;
+import com.edison.blackboard.model.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,5 +106,9 @@ public class DynamoDbCourseService {
         dynamoDbStudentService.updateStudent(dynamoDbStudentService.getStudentById(studentId)
                 .removeCourse(getCourseById(courseId)));
         return true;
+    }
+
+    public List<Student> getAllStudents(UUID courseId) {
+        return getCourseById(courseId).getStudentList();
     }
 }

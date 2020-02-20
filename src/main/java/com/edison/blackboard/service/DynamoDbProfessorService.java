@@ -24,11 +24,13 @@ public class DynamoDbProfessorService {
 
     private final DynamoDBMapper mapper;
     private final DynamoDbCourseService dynamoDbCourseService;
+    private final DynamoDbProgramService dynamoDbProgramService;
 
     @Autowired
-    public DynamoDbProfessorService(DynamoDBMapper mapper, @Lazy DynamoDbCourseService dynamoDbCourseService) {
+    public DynamoDbProfessorService(DynamoDBMapper mapper, @Lazy DynamoDbCourseService dynamoDbCourseService, DynamoDbProgramService dynamoDbProgramService) {
         this.mapper = mapper;
         this.dynamoDbCourseService = dynamoDbCourseService;
+        this.dynamoDbProgramService = dynamoDbProgramService;
     }
 
     public void insertProfessor(Professor professor) {
@@ -76,6 +78,20 @@ public class DynamoDbProfessorService {
     public boolean removeCourse(UUID professorId, UUID courseId) {
         updateProfessor(getProfessorById(professorId).removeCourse(dynamoDbCourseService.getCourseById(courseId)));
         dynamoDbCourseService.updateCourse(dynamoDbCourseService.getCourseById(courseId)
+                .removeProfessor(getProfessorById(professorId)));
+        return true;
+    }
+
+    public boolean addProgram(UUID professorId, UUID programId) {
+        updateProfessor(getProfessorById(professorId).addProgram(dynamoDbProgramService.getProgramById(programId)));
+        dynamoDbProgramService.updateProgram(dynamoDbProgramService.getProgramById(programId)
+                .addProfessor(getProfessorById(professorId)));
+        return true;
+    }
+
+    public boolean removeProgram(UUID professorId, UUID programId) {
+        updateProfessor(getProfessorById(professorId).removeProgram(dynamoDbProgramService.getProgramById(programId)));
+        dynamoDbProgramService.updateProgram(dynamoDbProgramService.getProgramById(programId)
                 .removeProfessor(getProfessorById(professorId)));
         return true;
     }
