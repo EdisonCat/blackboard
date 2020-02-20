@@ -105,6 +105,9 @@ for course list: GET
 for specific course info: GET
 ```localhost:8080/api/blackboard/dynamodb/course/{courseId}```
 
+for student list of a specific course: GET
+```localhost:8080/api/blackboard/dynamodb/course/{courseId}/student```
+
 for adding professor to course(will do adding course to professor automatically): PUT
 ```localhost:8080/api/blackboard/dynamodb/course/{courseId}/professor/{professorId}```
 
@@ -176,6 +179,15 @@ for program list: GET
 
 for specific program info: GET
 ```localhost:8080/api/blackboard/dynamodb/program/{programId}```
+
+for course list of a specific program: GET
+```localhost:8080/api/blackboard/dynamodb/program/{programId}/course```
+
+for student list of a specific program: GET
+```localhost:8080/api/blackboard/dynamodb/program/{programId}/student```
+
+for professor list of a specific program: GET
+```localhost:8080/api/blackboard/dynamodb/program/{programId}/professor```
   
 for adding student to program(will do adding program to student automatically): PUT
 ```localhost:8080/api/blackboard/dynamodb/program/{programId}/student/{studentId}```
