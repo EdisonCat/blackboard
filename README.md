@@ -9,6 +9,10 @@ Database: Amazon Web Services DynamoDB
 
 Test: Postman
 
+Deployment: Amazon Web Services Elastic Beanstalk
+
+AWS EB host: http://blackboardrestfulapis-env.mmrrmpyqmp.us-west-2.elasticbeanstalk.com
+
 ---
 ### Structure
 #### user -> APIs -> Service -> Data Access Operate -> Datasource
@@ -88,7 +92,6 @@ end point url, region info. Store the keys in application.properties in resource
 
 3. Enable auto-import to let your IDE download all the dependencies for you. Run the project(a Maven project).
 
-##### DO NOT PUSH application.properties of yours to GitHub!
 
 #### Browser(Get request only currently)
 1.Run the main function, which will start the server.
@@ -98,103 +101,103 @@ end point url, region info. Store the keys in application.properties in resource
 ---
 ##### Course:
 for course list: GET
-```localhost:8080/api/blackboard/dynamodb/course```
+``localhost:5000/api/blackboard/dynamodb/course``
 
 for specific course info: GET
-```localhost:8080/api/blackboard/dynamodb/course/{courseId}```
+``localhost:5000/api/blackboard/dynamodb/course/{courseId}``
 
 for student list of a specific course: GET
-```localhost:8080/api/blackboard/dynamodb/course/{courseId}/student```
+``localhost:5000/api/blackboard/dynamodb/course/{courseId}/student``
 
 for adding professor to course(will do adding course to professor automatically): PUT
-```localhost:8080/api/blackboard/dynamodb/course/{courseId}/professor/{professorId}```
+``localhost:5000/api/blackboard/dynamodb/course/{courseId}/professor/{professorId}``
 
 for adding ta to course:
-```localhost:8080/api/blackboard/dynamodb/course/{courseId}/ta/{studentId}```
+``localhost:5000/api/blackboard/dynamodb/course/{courseId}/ta/{studentId}``
   
 for adding student to course(will do adding course to student automatically): PUT
-```localhost:8080/api/blackboard/dynamodb/course/{courseId}/student/{studentId}```
+``localhost:5000/api/blackboard/dynamodb/course/{courseId}/student/{studentId}``
 
 for removing professor from course(will do removing course from professor automatically): DELETE
-```localhost:8080/api/blackboard/dynamodb/course/{courseId}/professor/{professorId}```
+``localhost:5000/api/blackboard/dynamodb/course/{courseId}/professor/{professorId}``
 
 for removing ta from course: DELETE
-```localhost:8080/api/blackboard/dynamodb/course/{courseId}/ta/{studentId}```
+``localhost:5000/api/blackboard/dynamodb/course/{courseId}/ta/{studentId}``
 
 for removing student from course(will do removing course from student automatically): DELETE
-```localhost:8080/api/blackboard/dynamodb/course/{courseId}/student/{studentId}```
+``localhost:5000/api/blackboard/dynamodb/course/{courseId}/student/{studentId}``
 
 for deleting course from database: DELETE
-```localhost:8080/api/blackboard/dynamodb/course/{courseId}```
+``localhost:5000/api/blackboard/dynamodb/course/{courseId}``
 
 ---
 ##### Student:
 for student list: GET
-```localhost:8080/api/blackboard/dynamodb/student```
+``localhost:5000/api/blackboard/dynamodb/student``
   
 for specific student info: GET
-```localhost:8080/api/blackboard/dynamodb/student/{studentId}```
+``localhost:5000/api/blackboard/dynamodb/student/{studentId}``
 
 for course list of a student: GET
-```localhost:8080/api/blackboard/dynamodb/student/{studentId}/course```
+``localhost:5000/api/blackboard/dynamodb/student/{studentId}/course``
 
 for adding course to student(will do adding student to course automatically): PUT
-```localhost:8080/api/blackboard/dynamodb/student/{studentId}/course/{courseId}```
+``localhost:5000/api/blackboard/dynamodb/student/{studentId}/course/{courseId}``
 
 for adding program to student(will do adding student to program automatically): PUT
-```localhost:8080/api/blackboard/dynamodb/student/{studentId}/program/{programId}```
+``localhost:5000/api/blackboard/dynamodb/student/{studentId}/program/{programId}``
 
 for removing course from student(will do removing student from course automatically): DELETE
-```localhost:8080/api/blackboard/dynamodb/student/{studentId}/course/{courseId}```
+``localhost:5000/api/blackboard/dynamodb/student/{studentId}/course/{courseId}``
 
 for removing program from student(will do removing student from program automatically): DELETE
-```localhost:8080/api/blackboard/dynamodb/student/{studentId}/program/{programId}```
+``localhost:5000/api/blackboard/dynamodb/student/{studentId}/program/{programId}``
 
 for deleting student from database: DELETE
-```localhost:8080/api/blackboard/dynamodb/student/{studentId}```
+``localhost:5000/api/blackboard/dynamodb/student/{studentId}``
 
 ---
 ##### Professor:
 for professor list: GET
-```localhost:8080/api/blackboard/dynamodb/professor```
+``localhost:5000/api/blackboard/dynamodb/professor``
 
 for specific professor info: GET
-```localhost:8080/api/blackboard/dynamodb/professor/{professorId}```
+``localhost:5000/api/blackboard/dynamodb/professor/{professorId}``
 
 for adding course to professor(will do adding professor to course automatically): PUT
-```localhost:8080/api/blackboard/dynamodb/professor/{professorId}/course/{courseId}```
+``localhost:5000/api/blackboard/dynamodb/professor/{professorId}/course/{courseId}``
 
 for removing course from professor(will do removing professor from course automatically): DELETE
-```localhost:8080/api/blackboard/dynamodb/professor/{professorId}/course/{courseId}```
+``localhost:5000/api/blackboard/dynamodb/professor/{professorId}/course/{courseId}``
 
 for deleting professor from database: DELETE
-```localhost:8080/api/blackboard/dynamodb/professor/{professorId}```
+``localhost:5000/api/blackboard/dynamodb/professor/{professorId}``
 
 ---
 ##### Program
 for program list: GET
-```localhost:8080/api/blackboard/dynamodb/program```
+``localhost:5000/api/blackboard/dynamodb/program``
 
 for specific program info: GET
-```localhost:8080/api/blackboard/dynamodb/program/{programId}```
+``localhost:5000/api/blackboard/dynamodb/program/{programId}``
 
 for course list of a specific program: GET
-```localhost:8080/api/blackboard/dynamodb/program/{programId}/course```
+``localhost:5000/api/blackboard/dynamodb/program/{programId}/course``
 
 for student list of a specific program: GET
-```localhost:8080/api/blackboard/dynamodb/program/{programId}/student```
+``localhost:5000/api/blackboard/dynamodb/program/{programId}/student``
 
 for professor list of a specific program: GET
-```localhost:8080/api/blackboard/dynamodb/program/{programId}/professor```
+``localhost:5000/api/blackboard/dynamodb/program/{programId}/professor``
   
 for adding student to program(will do adding program to student automatically): PUT
-```localhost:8080/api/blackboard/dynamodb/program/{programId}/student/{studentId}```
+``localhost:5000/api/blackboard/dynamodb/program/{programId}/student/{studentId}``
 
 for removing student from program(will do removing program from student automatically): DELETE
-```localhost:8080/api/blackboard/dynamodb/program/{programId}/student/{studentId}```
+``localhost:5000/api/blackboard/dynamodb/program/{programId}/student/{studentId}``
 
 for deleting program from database: DELETE
-```localhost:8080/api/blackboard/dynamodb/program/{programId}```
+``localhost:5000/api/blackboard/dynamodb/program/{programId}``
   
 #### Thrid-party software(Postman)
 1.Open Postman.
