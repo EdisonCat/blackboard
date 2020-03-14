@@ -15,6 +15,7 @@ public class Professor implements Serializable {
     private String name = "";
     private String program = "";
     private List<Course> courseList = new ArrayList<>();
+    private String professorId;
 
     public Professor(Professor professor) {
         setId(professor.getId());
