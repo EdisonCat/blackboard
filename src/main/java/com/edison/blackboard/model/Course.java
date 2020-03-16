@@ -15,7 +15,8 @@ public class Course implements Serializable {
     private List<Student> studentList = new ArrayList<>();
     private Professor professor;
     private Student ta;
-    private String courseId;
+    private UUID courseId;
+    private UUID boardId;
 
     public Course(Course course) {
             setName(course.getName());
@@ -88,6 +89,24 @@ public class Course implements Serializable {
         if(this.ta.getId().equals(ta.getId())) setTa(new Student());
         else System.out.println("TA Not Found");
         return this;
+    }
+
+    @DynamoDBAttribute
+    public UUID getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(UUID courseId) {
+        this.courseId = courseId;
+    }
+
+    @DynamoDBAttribute
+    public UUID getBoardId() {
+        return boardId;
+    }
+
+    public void setBoardId(UUID boardId) {
+        this.boardId = boardId;
     }
 
     public Course addStudent(Student student) {
