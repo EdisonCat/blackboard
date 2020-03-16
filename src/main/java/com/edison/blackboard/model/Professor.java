@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,6 +17,10 @@ public class Professor implements Serializable {
     private String program = "";
     private List<Course> courseList = new ArrayList<>();
     private String professorId;
+
+    private String lastName = "";
+    private String firstName = "";
+    private Date joiningDate;
 
     public Professor(Professor professor) {
         setId(professor.getId());
@@ -62,8 +67,44 @@ public class Professor implements Serializable {
     }
 
     @DynamoDBAttribute
+    public Date getJoiningDate() {
+        return joiningDate;
+    }
+
+    public void setJoiningDate(Date joiningDate) {
+        this.joiningDate = joiningDate;
+    }
+
+    @DynamoDBAttribute
     public List<Course> getCourseList() {
         return courseList;
+    }
+
+    @DynamoDBAttribute
+    public String getProfessorId() {
+        return professorId;
+    }
+
+    public void setProfessorId(String professorId) {
+        this.professorId = professorId;
+    }
+
+    @DynamoDBAttribute
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    @DynamoDBAttribute
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public void setCourseList(List<Course> courseList) {
