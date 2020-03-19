@@ -58,7 +58,7 @@ public class DynamoDbBoardService {
     public DynamoDBSaveExpression buildDynamoDBSaveExpression(Board board) {
         DynamoDBSaveExpression saveExpression = new DynamoDBSaveExpression();
         Map<String, ExpectedAttributeValue> expectedAttributeValueMap = new HashMap<>();
-        expectedAttributeValueMap.put("boardid", new ExpectedAttributeValue(new AttributeValue(board.getBoardId().toString())));
+        expectedAttributeValueMap.put("boardid", new ExpectedAttributeValue(new AttributeValue(board.getId().toString())));
         saveExpression.setExpected(expectedAttributeValueMap);
         return saveExpression;
     }
