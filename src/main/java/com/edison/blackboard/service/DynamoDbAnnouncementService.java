@@ -10,6 +10,7 @@ import com.edison.blackboard.model.Announcement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -25,7 +26,7 @@ public class DynamoDbAnnouncementService {
     private final DynamoDBMapper mapper;
 
     @Autowired
-    public DynamoDbAnnouncementService(DynamoDBMapper mapper, DynamoDbBoardService dynamoDbBoardService) {
+    public DynamoDbAnnouncementService(DynamoDBMapper mapper, @Lazy DynamoDbBoardService dynamoDbBoardService) {
         this.mapper = mapper;
         this.dynamoDbBoardService = dynamoDbBoardService;
     }
@@ -59,7 +60,7 @@ public class DynamoDbAnnouncementService {
     public DynamoDBSaveExpression buildDynamoDbSaveExpression(Announcement announcement) {
         DynamoDBSaveExpression saveExpression = new DynamoDBSaveExpression();
         Map<String, ExpectedAttributeValue> expectedAttributeValueMap = new HashMap<>();
-        expectedAttributeValueMap.put("announcementid", new ExpectedAttributeValue(new AttributeValue(announcement.getAnnouncementId().toString())));
+        expectedAttributeValueMap.put("announcementid", new ExpectedAttributeValue(new AttributeValue(announcement.getId().toString())));
         saveExpression.setExpected(expectedAttributeValueMap);
         return saveExpression;
     }
