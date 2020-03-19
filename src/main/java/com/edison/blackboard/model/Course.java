@@ -17,6 +17,7 @@ public class Course implements Serializable {
     private Student ta;
     private UUID courseId;
     private UUID boardId;
+    private Board board;
 
     public Course(Course course) {
             setName(course.getName());
@@ -35,6 +36,8 @@ public class Course implements Serializable {
     }
 
     public Course() {
+        this.board = new Board(this);
+        setBoardId(this.board.getId());
     }
 
     @DynamoDBAttribute
@@ -73,6 +76,15 @@ public class Course implements Serializable {
     public Course setProfessor(Professor professor) {
         this.professor = professor;
         return this;
+    }
+
+    @DynamoDBAttribute
+    public Board getBoard() {
+        return this.board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
     }
 
     @DynamoDBAttribute
