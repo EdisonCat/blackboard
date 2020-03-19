@@ -8,20 +8,26 @@ import java.util.UUID;
 @DynamoDBDocument
 public class Board {
     private UUID id;
-    private String boardId;
+    private Course course;
     private UUID courseId;
 
     public Board(Board board) {
-        setBoardId(board.getBoardId());
+        setId(board.getId());
         setCourseId(board.getCourseId());
         setId(board.getId());
     }
 
     public Board(Board board, boolean light) {
         if(light) {
-            setCourseId(board.getCourseId());
-            setBoardId(board.getBoardId());
+            setCourse(board.getCourse());
+            setId(board.getId());
         }
+    }
+
+    public Board() {}
+
+    public Board(Course course) {
+        setCourse(course);
     }
 
     @DynamoDBHashKey(attributeName = "boardid")
@@ -35,20 +41,21 @@ public class Board {
     }
 
     @DynamoDBAttribute
-    public String getBoardId() {
-        return boardId;
-    }
-
-    public void setBoardId(String boardId) {
-        this.boardId = boardId;
-    }
-
-    @DynamoDBAttribute
     public UUID getCourseId() {
         return courseId;
     }
 
     public void setCourseId(UUID courseId) {
         this.courseId = courseId;
+    }
+
+    @DynamoDBAttribute
+    public Course getCourse() {
+        return this.course;
+    }
+
+    public void setCourse(Course course) {
+        setCourseId(this.course.getCourseId());
+        this.course = course;
     }
 }
