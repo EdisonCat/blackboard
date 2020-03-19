@@ -2,7 +2,9 @@ package com.edison.blackboard.service;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.edison.blackboard.model.Board;
 import org.slf4j.Logger;
@@ -11,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class DynamoDbBoardService {
@@ -28,6 +32,27 @@ public class DynamoDbBoardService {
 
     public void insertBoard(Board board) {
         mapper.save(board);
+    }
+
+    public Board getBoardById(UUID id) {
+        return mapper.load(Board.class, id);
+    }
+
+    public void updateBoard(Board board) {
+        try {
+            mapper.save(board, buildDynamoDBSaveExpression(board));
+        }
+        catch (ConditionalCheckFailedException e) {
+            LOGGER.error(e.getMessage());
+        }
+    }
+
+    public List<Board> getAllBoards() {
+        return mapper.scan(Board.class, new DynamoDBScanExpression());
+    }
+
+    public void deleteBoard(Board board) {
+        mapper.delete(board);
     }
 
     public DynamoDBSaveExpression buildDynamoDBSaveExpression(Board board) {
