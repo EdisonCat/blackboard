@@ -29,6 +29,9 @@ ProgramService.java is used to call ProgramDao.java when APIs in ProgramControll
 #### CourseService.java: (for dummy data)
 CourseService.java is used to call CourseDao.java when APIs in CourseController.java are called.
 
+#### DynamoDbBoardService.java: (for real data in DynamoDB)
+Can be called by DynamoDbBoardController to call DAO to operate board datasource in DynamoDB.
+
 #### DynamoDbCourseService.java: (for real data in DynamoDB)
 Can be called by DynamoDbCourseController to call DAO to operate course datasource in DynamoDB.
 
@@ -67,6 +70,9 @@ ProgramController.java is the set of APIs that can be used to call ProgramServic
 
 #### CourseController.java: (for dummy data)
 CourseController.java is the set of APIs that can be used to call CourseService.java to call CourseDao to operate course datasource.
+
+#### DynamoDbBoardController.java: (for real data in DynamoDB)
+The set of APIs that can be used by users directly to call service and then dao/config to operate board datasource in DynamoDB.
 
 #### DynamoDbCourseController.java: (for real data in DynamoDB)
 The set of APIs that can be used by users directly to call service and then dao/config to operate course datasource in DynamoDB.
