@@ -32,6 +32,9 @@ CourseService.java is used to call CourseDao.java when APIs in CourseController.
 #### DynamoDbBoardService.java: (for real data in DynamoDB)
 Can be called by DynamoDbBoardController to call DAO to operate board datasource in DynamoDB.
 
+#### DynamoDbAnnouncementService.java: (for real data in DynamoDB) 
+Can be called by DynamoDbAnnouncementController to call DAO to operate announcement datasource in DynamoDB.
+
 #### DynamoDbCourseService.java: (for real data in DynamoDB)
 Can be called by DynamoDbCourseController to call DAO to operate course datasource in DynamoDB.
 
@@ -73,6 +76,9 @@ CourseController.java is the set of APIs that can be used to call CourseService.
 
 #### DynamoDbBoardController.java: (for real data in DynamoDB)
 The set of APIs that can be used by users directly to call service and then dao/config to operate board datasource in DynamoDB.
+
+#### DynamoDbAnnouncementController.java: (for real data in DynamoDB)
+The set of APIs that can be used by users directly to call service and then dao/config to operate announcemnt datasource in DynamoDB.
 
 #### DynamoDbCourseController.java: (for real data in DynamoDB)
 The set of APIs that can be used by users directly to call service and then dao/config to operate course datasource in DynamoDB.
