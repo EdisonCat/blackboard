@@ -42,6 +42,11 @@ public class DynamoDbAnnouncementController {
         dynamoDbAnnouncementService.updateAnnouncement(announcement);
     }
 
+    @PutMapping("{announcementId}/board/{boardId}")
+    public void setBoard(@PathVariable("announcementId") UUID announcementId, @PathVariable("boardId") UUID boardId) {
+        dynamoDbAnnouncementService.setBoard(announcementId, boardId);
+    }
+
     @DeleteMapping(path = "{announcementId}")
     public void deleteAnnouncementById(@PathVariable("announcementId") UUID announcementId) {
         dynamoDbAnnouncementService.deleteAnnouncement(getAnnouncementById(announcementId).getBody());
