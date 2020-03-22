@@ -35,10 +35,7 @@ public class Course implements Serializable {
         }
     }
 
-    public Course() {
-        this.board = new Board(this);
-        setBoardId(this.board.getId());
-    }
+    public Course() { }
 
     @DynamoDBAttribute
     public String getName() {
