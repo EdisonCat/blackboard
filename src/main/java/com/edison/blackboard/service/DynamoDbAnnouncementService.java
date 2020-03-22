@@ -53,6 +53,12 @@ public class DynamoDbAnnouncementService {
         return mapper.scan(Announcement.class, scanExpression);
     }
 
+    public void setBoard(UUID announcementId, UUID boardId) {
+        updateAnnouncement(getAnnouncementById(announcementId).setBoard(dynamoDbBoardService.getBoardById(boardId)));
+        dynamoDbBoardService.updateBoard(dynamoDbBoardService.getBoardById(boardId)
+                .addAnnouncement(getAnnouncementById(announcementId)));
+    }
+
     public void deleteAnnouncement(Announcement announcement) {
         mapper.delete(announcement);
     }
