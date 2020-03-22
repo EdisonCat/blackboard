@@ -6,6 +6,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
+import com.edison.blackboard.model.Announcement;
 import com.edison.blackboard.model.Board;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,6 +52,10 @@ public class DynamoDbBoardService {
         return mapper.scan(Board.class, new DynamoDBScanExpression());
     }
 
+    public List<Announcement> getAllAnnouncements(UUID boardId) {
+        return getBoardById(boardId).getAnnouncementList();
+    }
+
     public void deleteBoard(Board board) {
         mapper.delete(board);
     }
@@ -61,5 +66,11 @@ public class DynamoDbBoardService {
         expectedAttributeValueMap.put("boardid", new ExpectedAttributeValue(new AttributeValue(board.getId().toString())));
         saveExpression.setExpected(expectedAttributeValueMap);
         return saveExpression;
+    }
+
+    public void addAnnouncement(UUID boardId, UUID announcementId) {
+        updateBoard(getBoardById(boardId).addAnnouncement(dynamoDbAnnouncementService.getAnnouncementById(announcementId)));
+        dynamoDbAnnouncementService.updateAnnouncement(dynamoDbAnnouncementService.getAnnouncementById(announcementId)
+                .setBoard(getBoardById(boardId)));
     }
 }
