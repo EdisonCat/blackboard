@@ -1,7 +1,7 @@
 package com.edison.blackboard.api;
 
+import com.edison.blackboard.model.Announcement;
 import com.edison.blackboard.model.Board;
-import com.edison.blackboard.service.DynamoDbAnnouncementService;
 import com.edison.blackboard.service.DynamoDbBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,16 +15,14 @@ import java.util.UUID;
 @RestController
 public class DynamoDbBoardController {
     private final DynamoDbBoardService dynamoDbBoardService;
-    private final DynamoDbAnnouncementService dynamoDbAnnouncementService;
 
     @Autowired
-    public DynamoDbBoardController(DynamoDbBoardService dynamoDbBoardService, DynamoDbAnnouncementService dynamoDbAnnouncementService) {
+    public DynamoDbBoardController(DynamoDbBoardService dynamoDbBoardService) {
         this.dynamoDbBoardService = dynamoDbBoardService;
-        this.dynamoDbAnnouncementService = dynamoDbAnnouncementService;
     }
 
     @PostMapping
-    public boolean insertBoard(Board board) {
+    public boolean insertBoard(@RequestBody Board board) {
         dynamoDbBoardService.insertBoard(board);
         return true;
     }
@@ -35,6 +33,11 @@ public class DynamoDbBoardController {
         return new ResponseEntity<>(board, HttpStatus.OK);
     }
 
+    @GetMapping(path = "{boardId}/announcement")
+    public List<Announcement> getAllAnnouncement(@PathVariable("boardId") UUID boardId) {
+        return dynamoDbBoardService.getAllAnnouncements(boardId);
+    }
+
     @GetMapping
     public List<Board> getAllBoards() {
         return dynamoDbBoardService.getAllBoards();
@@ -43,6 +46,11 @@ public class DynamoDbBoardController {
     @PutMapping
     public void updateBoard(@RequestBody Board board) {
         dynamoDbBoardService.updateBoard(board);
+    }
+
+    @PutMapping("{boardId}/announcement/{announcementId}")
+    public void addAnnouncement(@PathVariable("boardId") UUID boardId, @PathVariable("announcementId") UUID announcementId) {
+        dynamoDbBoardService.addAnnouncement(boardId, announcementId);
     }
 
     @DeleteMapping(path = "{boardId}")
