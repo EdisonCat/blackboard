@@ -73,4 +73,10 @@ public class DynamoDbBoardService {
         dynamoDbAnnouncementService.updateAnnouncement(dynamoDbAnnouncementService.getAnnouncementById(announcementId)
                 .setBoard(getBoardById(boardId)));
     }
+
+    public void removeAnnouncement(UUID boardId, UUID announcementId) {
+        updateBoard(getBoardById(boardId).removeAnnouncement(dynamoDbAnnouncementService.getAnnouncementById(announcementId)));
+        dynamoDbAnnouncementService.updateAnnouncement(dynamoDbAnnouncementService.getAnnouncementById(announcementId)
+                .deleteBoard(getBoardById(boardId)));
+    }
 }
