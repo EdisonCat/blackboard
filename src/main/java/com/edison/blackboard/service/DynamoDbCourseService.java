@@ -6,6 +6,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
+import com.edison.blackboard.model.Board;
 import com.edison.blackboard.model.Course;
 import com.edison.blackboard.model.Student;
 import org.slf4j.Logger;
@@ -26,18 +27,29 @@ public class DynamoDbCourseService {
     private final DynamoDBMapper mapper;
     private final DynamoDbStudentService dynamoDbStudentService;
     private final DynamoDbProfessorService dynamoDbProfessorService;
+    private final DynamoDbBoardService dynamoDbBoardService;
 
     @Autowired
     public DynamoDbCourseService(DynamoDBMapper mapper,
                                  @Lazy DynamoDbStudentService dynamoDbStudentService,
-                                 DynamoDbProfessorService dynamoDbProfessorService) {
+                                 DynamoDbProfessorService dynamoDbProfessorService,
+                                 DynamoDbBoardService dynamoDbBoardService) {
         this.mapper = mapper;
         this.dynamoDbStudentService = dynamoDbStudentService;
         this.dynamoDbProfessorService = dynamoDbProfessorService;
+        this.dynamoDbBoardService = dynamoDbBoardService;
     }
 
     public void insertCourse(Course course) {
+        dynamoDbBoardService.insertBoard(course.getBoard());
+        dynamoDbBoardService.updateBoard(dynamoDbBoardService.getBoardById(course.getBoard().getId()).setCourse(course));
+        setBoard(course, dynamoDbBoardService.getBoardById(course.getBoard().getId()));
+
         mapper.save(course);
+    }
+
+    public void setBoard(Course course, Board board) {
+        course.setBoardId(board.getId());
     }
 
     public Course getCourseById(UUID id) {
@@ -110,5 +122,9 @@ public class DynamoDbCourseService {
 
     public List<Student> getAllStudents(UUID courseId) {
         return getCourseById(courseId).getStudentList();
+    }
+
+    public Board getBoard(UUID courseId) {
+        return dynamoDbBoardService.getBoardById(getCourseById(courseId).getBoardId());
     }
 }
