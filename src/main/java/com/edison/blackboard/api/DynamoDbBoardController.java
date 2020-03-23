@@ -58,4 +58,9 @@ public class DynamoDbBoardController {
         dynamoDbBoardService.deleteBoard(getBoardById(boardId).getBody());
     }
 
+    @DeleteMapping(path = "{boardId}/announcement/{announcementId}")
+    public void removeAnnouncement(@PathVariable("boardId") UUID boardId, @PathVariable("announcementId") UUID announcementId) {
+        dynamoDbBoardService.removeAnnouncement(boardId, announcementId);
+    }
+
 }
