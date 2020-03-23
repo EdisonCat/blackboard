@@ -70,4 +70,17 @@ public class Announcement {
         this.board = newBoard;
         return this;
     }
+
+    public Announcement deleteBoard(Board board) {
+        if(board == null) {
+            System.out.println("Board Not Found");
+            return this;
+        }
+        if(getBoardId().equals(board.getId())) {
+            this.board = null;
+            setBoardId(null);
+        }
+        System.out.println("Board Not Found");
+        return this;
+    }
 }
