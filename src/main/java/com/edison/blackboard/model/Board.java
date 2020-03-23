@@ -60,4 +60,19 @@ public class Board {
     public void setAnnouncementList(List<Announcement> announcementList) {
         this.announcementList = new ArrayList<>(announcementList);
     }
+
+    public Board removeAnnouncement(Announcement announcement) {
+        if(announcement == null) {
+            System.out.println("Announcement Not Found");
+            return this;
+        }
+        for(int i = 0; i < announcementList.size(); i++) {
+            if(announcementList.get(i).getId().equals(announcement.getId())) {
+                announcementList.remove(i);
+                return this;
+            }
+        }
+        System.out.println("Announcement Not Found");
+        return this;
+    }
 }
