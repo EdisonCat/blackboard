@@ -1,5 +1,6 @@
 package com.edison.blackboard.api;
 
+import com.edison.blackboard.model.Board;
 import com.edison.blackboard.model.Course;
 import com.edison.blackboard.model.Student;
 import com.edison.blackboard.service.DynamoDbCourseService;
@@ -41,6 +42,12 @@ public class DynamoDbCourseController {
     @GetMapping(path = "{courseId}/student")
     public List<Student> getAllStudents(@PathVariable("courseId") UUID courseId) {
         return dynamoDbCourseService.getAllStudents(courseId);
+    }
+
+    @GetMapping(path = "{courseId}/board")
+    public Board getBoard(@PathVariable("courseId") UUID courseId) {
+        return dynamoDbCourseService.getBoard(courseId);
+
     }
 
     @PutMapping
