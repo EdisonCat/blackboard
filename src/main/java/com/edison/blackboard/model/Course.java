@@ -78,9 +78,15 @@ public class Course implements Serializable {
         return this.board;
     }
 
-    public void setBoard(Board board) {
+    public Course setBoard(Board board) {
+        if(board == null) {
+            this.board = null;
+            setBoardId(null);
+            return this;
+        }
         this.board = new Board(board, true);
         setBoardId(getBoardId());
+        return this;
     }
 
     @DynamoDBAttribute
@@ -133,4 +139,8 @@ public class Course implements Serializable {
         return this;
     }
 
+    public Course removeBoard() {
+        setBoard(null);
+        return this;
+    }
 }
