@@ -71,6 +71,11 @@ public class DynamoDbCourseController {
         return dynamoDbCourseService.addStudent(courseId, studentId);
     }
 
+    @PutMapping(path = "{courseId}/board/{boardId}")
+    public boolean setBoard(@PathVariable("courseId") UUID courseId, @PathVariable("boardId") UUID boardId) {
+        return dynamoDbCourseService.setBoard(courseId, boardId);
+    }
+
     @DeleteMapping(path = "{courseId}/student/{studentId}")
     public boolean removeStudent(@PathVariable("courseId") UUID courseId, @PathVariable("studentId") UUID studentId) {
         return dynamoDbCourseService.removeStudent(courseId, studentId);
@@ -90,5 +95,10 @@ public class DynamoDbCourseController {
     @DeleteMapping(path = "{courseId}/ta/{studentId}")
     public boolean removeTa(@PathVariable("courseId") UUID courseId, @PathVariable("studentId") UUID studentId) {
         return dynamoDbCourseService.removeTa(courseId, studentId);
+    }
+
+    @DeleteMapping(path = "{courseId}/board")
+    public boolean removeBoard(@PathVariable("courseId") UUID courseId) {
+        return dynamoDbCourseService.removeBoard(courseId);
     }
 }
