@@ -85,7 +85,7 @@ public class Course implements Serializable {
             return this;
         }
         this.board = new Board(board, true);
-        setBoardId(getBoardId());
+        setBoardId(this.board.getId());
         return this;
     }
 

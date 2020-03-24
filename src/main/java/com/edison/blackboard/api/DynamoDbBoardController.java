@@ -53,6 +53,11 @@ public class DynamoDbBoardController {
         dynamoDbBoardService.addAnnouncement(boardId, announcementId);
     }
 
+    @PutMapping("{boardId}/course/{courseId}")
+    public void setCourse(@PathVariable("boardId") UUID boardId, @PathVariable("courseId") UUID courseId) {
+        dynamoDbBoardService.setCourse(boardId, courseId);
+    }
+
     @DeleteMapping(path = "{boardId}")
     public void deleteBoardById(@PathVariable("boardId") UUID boardId) {
         dynamoDbBoardService.deleteBoard(getBoardById(boardId).getBody());

@@ -89,4 +89,9 @@ public class DynamoDbBoardService {
         dynamoDbCourseService.updateCourse(dynamoDbCourseService.getCourseById(getBoardById(boardId).getCourseId()).removeBoard());
         updateBoard(getBoardById(boardId).removeCourse());
     }
+
+    public void setCourse(UUID boardId, UUID courseId) {
+        updateBoard(getBoardById(boardId).setCourse(dynamoDbCourseService.getCourseById(courseId)));
+        dynamoDbCourseService.updateCourse(dynamoDbCourseService.getCourseById(courseId).setBoard(getBoardById(boardId)));
+    }
 }
