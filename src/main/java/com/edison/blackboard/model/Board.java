@@ -103,4 +103,10 @@ public class Board {
         setCourseId(course.getId());
         return this;
     }
+
+    public Board removeCourse() {
+        courseName = "";
+        courseId = null;
+        return this;
+    }
 }
