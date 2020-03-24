@@ -11,6 +11,7 @@ import com.edison.blackboard.model.Board;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -24,11 +25,15 @@ public class DynamoDbBoardService {
 
     private final DynamoDBMapper mapper;
     private final DynamoDbAnnouncementService dynamoDbAnnouncementService;
+    private final DynamoDbCourseService dynamoDbCourseService;
 
     @Autowired
-    public DynamoDbBoardService(DynamoDBMapper mapper, DynamoDbAnnouncementService dynamoDbAnnouncementService) {
+    public DynamoDbBoardService(DynamoDBMapper mapper,
+                                DynamoDbAnnouncementService dynamoDbAnnouncementService,
+                                @Lazy DynamoDbCourseService dynamoDbCourseService) {
         this.mapper = mapper;
         this.dynamoDbAnnouncementService = dynamoDbAnnouncementService;
+        this.dynamoDbCourseService = dynamoDbCourseService;
     }
 
     public void insertBoard(Board board) {
@@ -78,5 +83,10 @@ public class DynamoDbBoardService {
         updateBoard(getBoardById(boardId).removeAnnouncement(dynamoDbAnnouncementService.getAnnouncementById(announcementId)));
         dynamoDbAnnouncementService.updateAnnouncement(dynamoDbAnnouncementService.getAnnouncementById(announcementId)
                 .deleteBoard(getBoardById(boardId)));
+    }
+
+    public void removeCourse(UUID boardId) {
+        dynamoDbCourseService.updateCourse(dynamoDbCourseService.getCourseById(getBoardById(boardId).getCourseId()).removeBoard());
+        updateBoard(getBoardById(boardId).removeCourse());
     }
 }

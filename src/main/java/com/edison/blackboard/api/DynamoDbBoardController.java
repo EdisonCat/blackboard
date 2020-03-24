@@ -63,4 +63,9 @@ public class DynamoDbBoardController {
         dynamoDbBoardService.removeAnnouncement(boardId, announcementId);
     }
 
+    @DeleteMapping(path = "{boardId}/course")
+    public void removeCourse(@PathVariable("boardId") UUID boardId) {
+        dynamoDbBoardService.removeCourse(boardId);
+    }
+
 }
