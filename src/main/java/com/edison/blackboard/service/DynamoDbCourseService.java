@@ -43,13 +43,11 @@ public class DynamoDbCourseService {
     public void insertCourse(Course course) {
         dynamoDbBoardService.insertBoard(course.getBoard());
         dynamoDbBoardService.updateBoard(dynamoDbBoardService.getBoardById(course.getBoard().getId()).setCourse(course));
-        setBoard(course.getId(), course.getBoardId());
-
         mapper.save(course);
+        setBoard(course.getId(), course.getBoard().getId());
     }
 
     public boolean setBoard(UUID courseId, UUID boardId) {
-//        course.setBoardId(board.getId());
         dynamoDbBoardService.updateBoard(dynamoDbBoardService.getBoardById(boardId).setCourse(getCourseById(courseId)));
         updateCourse(getCourseById(courseId).setBoard(dynamoDbBoardService.getBoardById(boardId)));
         return true;
