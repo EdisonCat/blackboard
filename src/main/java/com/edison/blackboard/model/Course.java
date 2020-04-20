@@ -17,6 +17,7 @@ public class Course implements Serializable {
     private Student ta;
     private UUID boardId;
     private Board board = new Board();
+    private String notificationTopic;
 
     public Course(Course course) {
             setName(course.getName());
@@ -71,6 +72,15 @@ public class Course implements Serializable {
     public Course setProfessor(Professor professor) {
         this.professor = professor;
         return this;
+    }
+
+    @DynamoDBAttribute
+    public String getNotificationTopic() {
+        return notificationTopic;
+    }
+
+    public void setNotificationTopic(String notificationTopic) {
+        this.notificationTopic = notificationTopic;
     }
 
     @DynamoDBAttribute
